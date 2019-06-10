@@ -30,7 +30,6 @@ def diccionario():
 
 def main():
     fondo = cargar_imagen('fondo.png')
-    
     General=pygame.sprite.Group()
     parqueadero_1=Estado(1,[50,50],screen,1)
     parqueadero_2=Estado(0,[200,50],screen,2)
