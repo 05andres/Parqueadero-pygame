@@ -7,13 +7,12 @@ BLANCO = (255, 255, 255)
 ROJO   = (255,   0,   0)
 
 class Estado(pygame.sprite.Sprite):
-	def __init__(self,estado,pos,screen,id):
+	def __init__(self,estado,pos,id,sabana,free):
 		pygame.sprite.Sprite.__init__(self)
-		self.image = pygame.Surface([50, 20])
-		self.image.fill(BLANCO)
-		self.image.set_colorkey(BLANCO)
-		self.pantalla=screen
-		self.color=NEGRO
+		self.m=0
+		self.s=sabana
+		self.libre=free[0][0]
+		self.image = self.s[self.m][0]
 		self.id=id
 		self.rect=self.image.get_rect()
 		self.estado=estado
@@ -22,11 +21,9 @@ class Estado(pygame.sprite.Sprite):
 		print "hola"
 	def update(self):
 		if self.estado == 0:
-			self.color=NEGRO
-			pygame.draw.circle(self.pantalla, self.color,[self.rect.x,self.rect.y], 10)
+			self.image = self.libre
 		else:
-			self.color=ROJO
-			pygame.draw.circle(self.pantalla, self.color,[self.rect.x,self.rect.y], 10)
+			self.image = self.s[0][0]
 
 
 	
