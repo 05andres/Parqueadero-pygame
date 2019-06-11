@@ -14,11 +14,26 @@ def cargar_imagen(nombre,transparente=False):
 
      except pygame.error, message:
           raise SystemExit, message
-     imagen = imagen.convert()
+     imagen = imagen.convert_alpha()
      if transparente:
           color = imagen.get_at((0,0))
           imagen.set_colorkey(color, RLEACCEL)
      return imagen
+
+def recortar(imagen,in_x,in_y):
+  image = pygame.image.load(imagen)
+  ancho_img, alto_img = image.get_size()
+  lon_x = ancho_img/in_x
+  lon_y = alto_img/in_y
+  matriz_recorte = []
+  for i in range(lon_y):
+    fila=[]
+    for j in range(lon_x):
+      plantilla = image.subsurface(0+(j*in_x),0+(i*in_y),in_x,in_y)
+      fila.append(plantilla)
+    matriz_recorte.append(fila)
+  return matriz_recorte
+
 
 def diccionario():
     file="estados.csv"
@@ -31,7 +46,7 @@ def diccionario():
 
 def main():
     fondo = cargar_imagen('fondo.png')
-    imagen = cargar_imagen('carro1.png')
+    imagen = recortar('carro1.png',73,67)
     
     General=pygame.sprite.Group()
     parqueadero_1=Estado(1,[50,50],screen,1,imagen)
