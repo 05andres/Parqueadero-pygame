@@ -49,25 +49,47 @@ def main():
     libre="libre.png"
     free=Recortar(libre,78,70)
     car=Recortar(carro,73,67)
-    General=pygame.sprite.Group()
+    Creados = pygame.sprite.Group()
+    Borrados = pygame.sprite.Group()
+
     parqueadero_1=Estado(1,[30,20],1,car,free)
     parqueadero_2=Estado(0,[150,20],2,car,free)
-    General.add(parqueadero_1)
-    General.add(parqueadero_2)
+
+    Creados.add(parqueadero_1)
+
+    Creados.add(parqueadero_2)
+
     running = True
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 running = False
+
         dicc= diccionario()
-        for j in General:
+        for j in Creados:
             for i in dicc:
                 if int(j.id)== int(i["id"]):
                     j.estado = int(i["estado"])
+
+        for j in Borrados:
+          for i in dicc:
+            if int(j.id)== int(i["id"]):
+                    j.estado = int(i["estado"])
+
+        for i in Creados:
+          if i.estado == 0:
+            Creados.remove(i)
+            Borrados.add(i)
+
+        for i in Borrados:
+          if i.estado == 1:
+            Creados.add(i)
+            Borrados.remove(i)
+
         screen.blit(fondo, (0, 0))
-        General.update()
-        General.draw(screen)
+        Creados.update()
+        Creados.draw(screen)
         pygame.display.flip()
         
         

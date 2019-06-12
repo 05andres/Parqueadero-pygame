@@ -19,9 +19,11 @@ class Estado(pygame.sprite.Sprite):
 		self.rect.x=pos[0]
 		self.rect.y=pos[1]
 		print "hola"
+		
 	def update(self):
 		if self.estado == 0:
-			self.image = self.libre
+			#self.image = self.libre
+			pass
 		else:
 			self.image = self.s[0][0]
 
