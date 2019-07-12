@@ -8,7 +8,7 @@ white = (255,255,255)
 red = (255,0,0)
 green = (0,255,0)
 blue = (0,0,255)
-screen = pygame.display.set_mode((800, 800))
+screen = pygame.display.set_mode((1233, 600))
 
 def Recortar(archivo_img,cr_an,cr_al):
     image= pygame.image.load(archivo_img)
@@ -44,20 +44,27 @@ def diccionario():
     return estados
 
 def main():
-    fondo = cargar_imagen('fondo.png')
+    fondo = cargar_imagen('arqui.jpg')
     carro= "carro.png"
     libre="libre.png"
-    free=Recortar(libre,78,70)
+    free=Recortar(libre,10,1)
     car=Recortar(carro,73,67)
     Creados = pygame.sprite.Group()
     Borrados = pygame.sprite.Group()
+    pos_x=23
+    for x in range(1, 16):
+        inter=70  
+        pos_x+=inter
+        anter=pos_x
+        parqueadero_1=Estado(0,[pos_x,20],x,car,free,"A")
+        Creados.add(parqueadero_1)
+    pos_y=70
+    for x in range(16, 21):
+        inter=70  
+        pos_y+=inter
+        parqueadero_2=Estado(0,[20,pos_y],x,car,free,"B")
+        Creados.add(parqueadero_2)
 
-    parqueadero_1=Estado(1,[30,20],1,car,free)
-    parqueadero_2=Estado(0,[150,20],2,car,free)
-
-    Creados.add(parqueadero_1)
-
-    Creados.add(parqueadero_2)
 
     running = True
     while running:
@@ -72,20 +79,7 @@ def main():
                 if int(j.id)== int(i["id"]):
                     j.estado = int(i["estado"])
 
-        for j in Borrados:
-          for i in dicc:
-            if int(j.id)== int(i["id"]):
-                    j.estado = int(i["estado"])
-
-        for i in Creados:
-          if i.estado == 0:
-            Creados.remove(i)
-            Borrados.add(i)
-
-        for i in Borrados:
-          if i.estado == 1:
-            Creados.add(i)
-            Borrados.remove(i)
+    
 
         screen.blit(fondo, (0, 0))
         Creados.update()
